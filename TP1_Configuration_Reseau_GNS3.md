@@ -288,6 +288,119 @@ Ce TP a permis d'acquérir les compétences suivantes :
 
 ---
 
+## Configuration des commutateurs Cisco IOU
+
+### Problème : Licence IOU manquante
+
+Lors de l'utilisation des commutateurs Cisco IOU dans GNS3, vous pouvez rencontrer l'erreur suivante :
+
+```
+error while starting IOU1: Could not find an iourc file (IOU license), please configure an IOU license
+```
+
+Cette erreur indique qu'une licence IOU (IOS on Unix) est nécessaire pour utiliser les commutateurs Cisco dans GNS3.
+
+### Solution : Activation de la licence Cisco IOU
+
+#### Étape 1 : Ouvrir Putty
+
+Putty est un émulateur de terminal qui permet de se connecter à des systèmes distants via SSH. Ouvrez Putty sur votre machine locale pour établir une connexion à la VM GNS3.
+
+#### Étape 2 : Obtenir l'adresse IP et les identifiants
+
+Récupérez l'adresse IP de la VM GNS3 depuis l'interface GNS3. Vous aurez également besoin du nom d'utilisateur et du mot de passe pour accéder à la VM.
+
+![Connexion SSH avec GNS3](https://ccnaguru.com/wp-content/uploads/2024/02/coonect-ssh-with-gns3.png)
+
+**Identifiants par défaut :**
+- **Nom d'utilisateur** : `gns3`
+- **Mot de passe** : `gns3`
+- **Adresse IP** : Visible dans l'interface GNS3 (ex: 192.168.173.128)
+
+#### Étape 3 : Connexion à la VM GNS3 via Putty
+
+Entrez l'adresse IP de la VM GNS3 dans le champ "Host Name" de Putty. Cliquez sur "Open" pour établir la connexion SSH.
+
+#### Étape 4 : Fournir les identifiants
+
+Lorsque demandé, entrez le nom d'utilisateur et le mot de passe pour la VM GNS3.
+
+#### Étape 5 : Sélectionner Shell et appuyer sur Entrée
+
+Une fois connecté, sélectionnez l'option shell dans le menu et appuyez sur Entrée pour accéder à l'interface en ligne de commande de la VM GNS3.
+
+#### Étape 6 : Télécharger le script Cisco IOU Keygen
+
+Exécutez la commande suivante pour télécharger le script Cisco IOU Keygen :
+
+```bash
+wget http://www.ipvanquish.com/download/CiscoIOUKeygen3f.py
+```
+
+#### Étape 7 : Vérifier le fichier téléchargé
+
+Exécutez la commande `ls` pour lister les fichiers du répertoire courant. Vérifiez que le fichier `CiscoIOUKeygen3f.py` est présent.
+
+```bash
+ls
+```
+
+#### Étape 8 : Exécuter le script Keygen
+
+Exécutez la commande suivante pour exécuter le script Cisco IOU Keygen :
+
+```bash
+python3 CiscoIOUKeygen3f.py
+```
+
+![Exécution du script de génération de licence](https://ccnaguru.com/wp-content/uploads/2024/02/run-get-licence.png)
+
+#### Étape 9 : Vérifier la sortie
+
+Après avoir exécuté le script, exécutez à nouveau la commande `ls` pour vous assurer que le fichier `iourc.txt` a été généré.
+
+```bash
+ls
+```
+
+#### Étape 10 : Afficher les informations de licence
+
+Utilisez la commande `cat iourc.txt` pour afficher le contenu du fichier `iourc.txt`. Copiez le texte affiché dans le terminal.
+
+```bash
+cat iourc.txt
+```
+
+**Exemple de sortie :**
+```
+[license]
+gns3vm = 73635fd3b0a13ad0;
+```
+
+#### Étape 11 : Configurer les préférences GNS3
+
+1. Ouvrez GNS3 et naviguez vers **Edit > Preferences**
+2. Allez dans la section **"IOS on Unix"**
+3. Collez le texte copié dans le champ approprié
+4. Cliquez sur **"Apply"** puis **"OK"** pour sauvegarder les modifications
+
+![Configuration de la licence IOU dans GNS3](https://ccnaguru.com/wp-content/uploads/2024/02/gns3-iourc-apply-1536x826.png)
+
+### Résultat
+
+En suivant ces instructions étape par étape, vous pouvez facilement activer une licence Cisco IOU dans GNS3 en utilisant Putty. Cela vous permet d'utiliser légalement les images Cisco IOU pour la simulation et les tests de réseau dans votre environnement GNS3.
+
+### Commandes de référence
+
+| **Commande** | **Description** | **Utilisation** |
+|:---:|:---:|:---:|
+| `wget <URL>` | Télécharge un fichier depuis une URL | Télécharger le script keygen |
+| `ls` | Liste les fichiers du répertoire | Vérifier la présence des fichiers |
+| `python3 <script>` | Exécute un script Python | Générer la licence IOU |
+| `cat <fichier>` | Affiche le contenu d'un fichier | Voir le contenu de la licence |
+
+---
+
 ## Glossaire
 
 > **Lexique technique** - Définitions des termes utilisés dans ce document
