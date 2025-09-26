@@ -1,29 +1,37 @@
-# TP1 – Configuration Réseau avec GNS3
-
 <div align="center">
 
-![GNS3 Logo](https://upload.wikimedia.org/wikipedia/commons/8/8f/GNS3_logo.png)
+<img src="https://storage.letudiant.fr/osp/cards/316/LOGO-ESIEE-IT-Bee-blanc-fond-bleu-classique-241121064859.jpg" width="200" height="200" alt="ESIEE IT Logo">
+
+# TP1 – Configuration Réseau avec GNS3
 
 **Simulation et Configuration de Réseaux avec GNS3**
+
+---
+
+## Informations du TP
+
+**Établissement :** ESIEE IT  
+**Intervenant :** Yaya DOUMBIA  
+**Promotion :** PO_TH6_DEV SOL NUM SEC L3C ALT 25-26  
+**Année scolaire :** 2025-2026  
+
+---
+
+## Membres du Groupe
+
+| **Photo** | **Nom** | **Prénom** | **GitHub** | **LinkedIn** |
+|:---:|:---:|:---:|:---:|:---:|
+| <img src="https://media.licdn.com/dms/image/v2/D4E35AQFSZbzOmWppmQ/profile-framedphoto-shrink_800_800/B4EZlO8KvFKoAg-/0/1757966019805?e=1759474800&v=beta&t=HJd1WHzfmilQ-Thc-PqNWM3TnV30VxeVV0fsgQXXTE8" width="64" height="64" style="border-radius: 50%;"> | **FARIA** | Anthony | [GitHub](https://github.com/Anthony-Faria-dos-santos) | [LinkedIn](https://www.linkedin.com/in/anthony-faria-dos-santos/) |
+| <img src="https://media.licdn.com/dms/image/v2/D4E35AQGAK7VJ8f5Y8Q/profile-framedphoto-shrink_400_400/B4EZkQ2TS1IwAk-/0/1756924294971?e=1759474800&v=beta&t=gOECMgZQSIjiqey5CndRGDSvl8-sU3v1P25ZIAuuNNw" width="64" height="64" style="border-radius: 50%;"> | **ARBARETAZ** | Quentin | [GitHub](https://github.com/CoDy-2224) | [LinkedIn](https://www.linkedin.com/in/quentin-arbaretaz-technicien-reseaux/) |
+| <img src="https://media.licdn.com/dms/image/v2/D4E03AQGHdkAhxCNjVw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706858030136?e=1761782400&v=beta&t=JDE_bm8KRclKrAvf7pLllFoW47hSByShXb0uV4hLN-8" width="64" height="64" style="border-radius: 50%;"> | **BOUGARA** | Yani | [GitHub](https://github.com/yanibougara) | [LinkedIn](https://www.linkedin.com/in/yani-bougara-15850224b/) |
+| <img src="https://media.licdn.com/dms/image/v2/D4E03AQEvYhK-R9hC2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1728762194206?e=1761782400&v=beta&t=_azOfyI8BZ6upUWR77NsWiClawd_98qToU3AQwkFY0M" width="64" height="64" style="border-radius: 50%;"> | **LEBEL** | Mathis | [GitHub](https://github.com/0osmoz0) | [LinkedIn](https://www.linkedin.com/in/mathis-lebel-429114293/) |
+
+---
 
 *Compte-rendu de Travaux Pratiques - Configuration Réseau*
 
 </div>
 
----
-
-## Équipe de Travail
-
-<div align="center">
-
-| **Photo** | **Nom** | **GitHub** | **LinkedIn** |
-|:---:|:---:|:---:|:---:|
-| <img src="https://media.licdn.com/dms/image/v2/D4E35AQFSZbzOmWppmQ/profile-framedphoto-shrink_800_800/B4EZlO8KvFKoAg-/0/1757966019805?e=1759474800&v=beta&t=HJd1WHzfmilQ-Thc-PqNWM3TnV30VxeVV0fsgQXXTE8" width="64" height="64" style="border-radius: 50%;"> | **FARIA Anthony** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat&logo=github)](https://github.com/Anthony-Faria-dos-santos) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/anthony-faria-dos-santos/) |
-| <img src="https://media.licdn.com/dms/image/v2/D4E35AQGAK7VJ8f5Y8Q/profile-framedphoto-shrink_400_400/B4EZkQ2TS1IwAk-/0/1756924294971?e=1759474800&v=beta&t=gOECMgZQSIjiqey5CndRGDSvl8-sU3v1P25ZIAuuNNw" width="64" height="64" style="border-radius: 50%;"> | **ARBARETAZ Quentin** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat&logo=github)](https://github.com/CoDy-2224) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/quentin-arbaretaz-technicien-reseaux/) |
-| <img src="https://media.licdn.com/dms/image/v2/D4E03AQGHdkAhxCNjVw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706858030136?e=1761782400&v=beta&t=JDE_bm8KRclKrAvf7pLllFoW47hSByShXb0uV4hLN-8" width="64" height="64" style="border-radius: 50%;"> | **BOUGARA Yani** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat&logo=github)](https://github.com/yanibougara) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/yani-bougara-15850224b/) |
-| <img src="https://media.licdn.com/dms/image/v2/D4E03AQEvYhK-R9hC2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1728762194206?e=1761782400&v=beta&t=_azOfyI8BZ6upUWR77NsWiClawd_98qToU3AQwkFY0M" width="64" height="64" style="border-radius: 50%;"> | **LEBEL Mathis** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat&logo=github)](https://github.com/0osmoz0) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/mathis-lebel-429114293/) |
-
-</div>
 
 ---
 
