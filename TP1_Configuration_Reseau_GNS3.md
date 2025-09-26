@@ -1,6 +1,20 @@
 # TP1 – Configuration Réseau avec GNS3
 
-## Équipe
+<div align="center">
+
+![GNS3 Logo](https://upload.wikimedia.org/wikipedia/commons/8/8f/GNS3_logo.png)
+
+**Simulation et Configuration de Réseaux avec GNS3**
+
+*Compte-rendu de Travaux Pratiques - Configuration Réseau*
+
+</div>
+
+---
+
+## Équipe de Travail
+
+<div align="center">
 
 | **Photo** | **Nom** | **GitHub** | **LinkedIn** |
 |:---:|:---:|:---:|:---:|
@@ -9,9 +23,13 @@
 | <img src="https://media.licdn.com/dms/image/v2/D4E03AQGHdkAhxCNjVw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706858030136?e=1761782400&v=beta&t=JDE_bm8KRclKrAvf7pLllFoW47hSByShXb0uV4hLN-8" width="64" height="64" style="border-radius: 50%;"> | **BOUGARA Yani** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat&logo=github)](https://github.com/yanibougara) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/yani-bougara-15850224b/) |
 | <img src="https://media.licdn.com/dms/image/v2/D4E03AQEvYhK-R9hC2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1728762194206?e=1761782400&v=beta&t=_azOfyI8BZ6upUWR77NsWiClawd_98qToU3AQwkFY0M" width="64" height="64" style="border-radius: 50%;"> | **LEBEL Mathis** | [![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat&logo=github)](https://github.com/0osmoz0) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/mathis-lebel-429114293/) |
 
+</div>
+
 ---
 
 ## Table des matières
+
+<div align="center">
 
 <details>
 <summary><strong>Partie 1 : Création de la topologie GNS3 et configuration des interfaces</strong></summary>
@@ -21,10 +39,11 @@
 </details>
 
 <details>
-<summary><strong>Partie 2 : Application de la passerelle</strong></summary>
+<summary><strong>Partie 2 : Application de la passerelle et accès Internet</strong></summary>
 
 - [1. Configuration](#1-configuration)
-- [2. Validation](#2-validation)
+- [2. Accès à Internet depuis GNS3](#2-accès-à-internet-depuis-gns3)
+- [3. Validation](#3-validation)
 </details>
 
 <details>
@@ -37,18 +56,72 @@
 - [Tâche 5 : Attribution des ports](#tâche-5--attribution-des-ports)
 </details>
 
+<details>
+<summary><strong>Configuration des commutateurs Cisco IOU</strong></summary>
+
+- [Problème : Licence IOU manquante](#problème--licence-iou-manquante)
+- [Solution : Activation de la licence Cisco IOU](#solution--activation-de-la-licence-cisco-iou)
+- [Configuration de la VM GNS3 et installation des images IOU](#configuration-de-la-vm-gns3-et-installation-des-images-iou)
+</details>
+
+<details>
+<summary><strong>Ressources et Liens utiles</strong></summary>
+
+- [Installation et Configuration GNS3](#installation-et-configuration-gns3)
+- [Images et Équipements](#images-et-équipements)
+</details>
+
+<details>
+<summary><strong>Glossaire</strong></summary>
+
+- [Équipements et Logiciels](#équipements-et-logiciels)
+- [Technologies et Protocoles](#technologies-et-protocoles)
+- [Configuration et Interfaces](#configuration-et-interfaces)
+- [Commandes et Tests](#commandes-et-tests)
+</details>
+
+</div>
+
 ---
 
-## Partie 1 : Créer la topologie GNS3 et configurer les interfaces réseaux
+## Partie 1 : Création de la topologie GNS3 et configuration des interfaces
+
+<div align="center">
+
+### Objectifs
+- Créer une topologie réseau complète dans GNS3
+- Configurer et activer les interfaces des équipements
+- Tester la connectivité entre les éléments
+
+</div>
 
 ### 1. Configuration des équipements
 
+<div align="center">
+
+**Architecture de la topologie mise en place :**
+
+</div>
+
 Dans GNS3, une topologie de base a été mise en place comprenant :
-- **Routeurs Cisco** : pour le routage inter-réseaux
-- **Hôtes simulés (VPCS)** : pour simuler les postes clients
-- **Switches** : pour la commutation locale
+
+<div align="center">
+
+| **Équipement** | **Rôle** | **Fonction** |
+|:---:|:---:|:---:|
+| **Routeurs Cisco** | Routage inter-réseaux | Acheminement des paquets entre réseaux |
+| **Hôtes simulés (VPCS)** | Simulation de postes clients | Test de connectivité et services |
+| **Switches** | Commutation locale | Connexion des équipements locaux |
+
+</div>
 
 #### Analyse de l'état des connexions du routeur
+
+<div align="center">
+
+**Vérification de l'état des interfaces réseau**
+
+</div>
 
 Pour vérifier l'état des connexions du routeur et assurer leur stabilité et performance :
 
@@ -60,7 +133,11 @@ FastEthernet3/0 unassigned YES unset administratively down down
 FastEthernet3/1 unassigned YES unset administratively down down
 ```
 
-**Analyse** : Toutes les interfaces sont en mode 'désactivé' dans la colonne 'Statut' en termes d'administration.
+<div align="center">
+
+> **Analyse** : Toutes les interfaces sont en mode 'désactivé' dans la colonne 'Statut' en termes d'administration.
+
+</div>
 
 #### Validation de la configuration initiale
 
@@ -124,15 +201,36 @@ Une fois les interfaces configurées, la connectivité est testée avec les comm
 
 ## Partie 2 : Application de la passerelle et accès Internet
 
+<div align="center">
+
+### Objectifs
+- Configurer les passerelles réseau
+- Implémenter l'accès Internet via NAT
+- Tester la connectivité externe
+
+</div>
+
 ### 1. Configuration
 
 #### Configuration IP et passerelle sur VPCS
+
+<div align="center">
+
+**Configuration des paramètres réseau des hôtes virtuels**
+
+</div>
 
 ```bash
 VPCS> ip 192.168.1.2/24 192.168.1.1
 ```
 
 #### Sauvegarde de la configuration du routeur
+
+<div align="center">
+
+**Méthodes de sauvegarde des configurations**
+
+</div>
 
 ```bash
 # Méthode 1
@@ -186,13 +284,57 @@ Les tests suivants permettent de valider la configuration :
 
 ## Partie 3 : Configuration VLAN
 
+<div align="center">
+
+### Objectifs
+- Créer et configurer des VLANs
+- Attribuer les ports aux VLANs appropriés
+- Tester la segmentation réseau
+
+</div>
+
 ### Tâche 1 : Attribution des adresses IP
+
+<div align="center">
+
+**Plan d'adressage des machines**
+
+</div>
 
 Chaque machine reçoit une adresse IP selon le plan d'adressage défini.
 
 ### Tâche 2 : Configuration de base du switch
 
+#### Commutateurs Cisco recommandés pour les VLAN
+
+<div align="center">
+
+**Équipements recommandés pour la configuration VLAN**
+
+</div>
+
+Pour une configuration VLAN optimale, les commutateurs Cisco suivants sont recommandés :
+
+<div align="center">
+
+| **Type de commutateur** | **Version IOS** | **Utilisation** |
+|:---:|:---:|:---:|
+| **Commutateur L2** | 15.6.0.9S | Commutation de niveau 2, gestion des VLANs |
+| **Commutateur L3** | L3-15 | Routage inter-VLAN, fonctionnalités avancées |
+
+</div>
+
+**Avantages des commutateurs recommandés :**
+- **L2 15.6.0.9S** : Support complet des VLANs, STP, et fonctionnalités de commutation
+- **L3-15** : Routage inter-VLAN, ACL, et fonctionnalités de sécurité avancées
+
 #### Configuration des mots de passe
+
+<div align="center">
+
+**Sécurisation de l'accès au commutateur**
+
+</div>
 
 ```bash
 Switch(config)# enable secret class
@@ -244,9 +386,17 @@ Switch(config-if)# switchport access vlan 100
 
 ## Conclusion
 
+<div align="center">
+
+### Compétences acquises
+
+</div>
+
 Ce TP a permis d'acquérir les compétences suivantes :
 
 ### Objectifs atteints
+
+<div align="center">
 
 | **Compétence** | **Description** | **Niveau acquis** |
 |:---:|:---:|:---:|
@@ -256,14 +406,26 @@ Ce TP a permis d'acquérir les compétences suivantes :
 | **Gestion des VLANs** | Création, configuration et attribution des VLANs | Maîtrisé |
 | **Simulation Internet** | Mise en œuvre du NAT pour l'accès externe | Maîtrisé |
 
+</div>
+
 ### Résultats obtenus
 
-- **Connectivité validée** : Tous les tests de connectivité ont été réussis  
-- **VLANs fonctionnels** : Séparation des réseaux étudiants et intervenants  
-- **Configuration sauvegardée** : Persistance des configurations sur les équipements  
-- **Architecture opérationnelle** : Topologie complète et fonctionnelle  
+<div align="center">
 
-**Bilan :** Toutes les configurations et tests ont validé la bonne connectivité entre les équipements, démontrant une maîtrise des concepts de base du réseautage avec GNS3.
+| **Résultat** | **Statut** | **Impact** |
+|:---:|:---:|:---:|
+| **Connectivité validée** | Réussi | Tous les tests de connectivité ont été réussis |
+| **VLANs fonctionnels** | Réussi | Séparation des réseaux étudiants et intervenants |
+| **Configuration sauvegardée** | Réussi | Persistance des configurations sur les équipements |
+| **Architecture opérationnelle** | Réussi | Topologie complète et fonctionnelle |
+
+</div>
+
+<div align="center">
+
+> **Bilan** : Toutes les configurations et tests ont validé la bonne connectivité entre les équipements, démontrant une maîtrise des concepts de base du réseautage avec GNS3.
+
+</div>
 
 ---
 
@@ -389,6 +551,127 @@ gns3vm = 73635fd3b0a13ad0;
 ### Résultat
 
 En suivant ces instructions étape par étape, vous pouvez facilement activer une licence Cisco IOU dans GNS3 en utilisant Putty. Cela vous permet d'utiliser légalement les images Cisco IOU pour la simulation et les tests de réseau dans votre environnement GNS3.
+
+---
+
+## Configuration de la VM GNS3 et installation des images IOU
+
+### Configuration de la VM GNS3
+
+#### Étape 1 : Configuration des préférences GNS3 VM
+
+Après avoir configuré la licence IOU, il est nécessaire de configurer la VM GNS3 dans les préférences :
+
+1. **Ouvrir les préférences GNS3** : `Edit > Preferences`
+2. **Sélectionner "GNS3 VM"** dans le panneau de gauche
+3. **Activer la VM** : Cocher "Enable the GNS3 VM"
+4. **Sélectionner la machine de virtualisation** : VMware, VirtualBox, ou QEMU
+5. **Cliquer sur "Refresh"** pour détecter la VM
+6. **La VM apparaît dans "VM name"** une fois détectée
+
+#### Étape 2 : Configuration des actions de fermeture
+
+Dans la section "Action when closing" :
+- **Sélectionner "Keep GNS3 VM running"** pour maintenir la VM active
+- Cela permet de conserver les configurations et d'éviter les redémarrages
+
+#### Étape 3 : Vérification dans Server Summary
+
+Une fois configurée, la VM GNS3 apparaît dans le **Server Summary** avec :
+- **Statut** : Running
+- **Utilisation CPU** : Affichage en temps réel
+- **Utilisation RAM** : Monitoring des ressources
+
+### Installation des images IOU
+
+#### Étape 1 : Accès aux nouveaux équipements
+
+1. **Naviguer vers "Browse all devices"**
+2. **Cliquer sur "New device"**
+3. **Sélectionner "Install new appliance from GNS3 server"**
+
+#### Étape 2 : Importation des images IOU
+
+1. **Rechercher "IOU L3"** dans la liste des appliances
+2. **Sélectionner l'image IOU L3** appropriée
+3. **Importer l'image .bin** dans la liste des images IOU
+4. **Attendre la synchronisation** avec le serveur GNS3
+
+#### Étape 3 : Configuration des interfaces réseau de la VM
+
+**Configuration requise pour la VM GNS3 :**
+
+| **Interface** | **Type** | **Configuration** | **Utilisation** |
+|:---:|:---:|:---:|:---:|
+| **Interface 1** | Host-only | Connexion directe avec l'hôte | Communication GNS3 |
+| **Interface 2** | NAT | Accès Internet | Téléchargements et mises à jour |
+
+**Avantages de cette configuration :**
+- **Host-only** : Communication stable entre GNS3 et la VM
+- **NAT** : Accès Internet pour les téléchargements d'images
+- **Isolation** : Sécurité du réseau de simulation
+
+### Séquence de démarrage optimale
+
+#### Ordre de démarrage recommandé
+
+1. **Démarrer la VM GNS3** en premier
+2. **Lancer GNS3** sur l'hôte
+3. **Vérifier la connexion** dans Server Summary
+4. **Charger la topologie** existante ou créer une nouvelle
+5. **Ajouter le routeur IOU** (IOU1) dans la topologie
+6. **Configurer le NAT** pour l'accès Internet
+
+#### Vérifications préalables
+
+| **Élément** | **Statut requis** | **Vérification** |
+|:---:|:---:|:---:|
+| **VM GNS3** | Running | Server Summary |
+| **Licence IOU** | Configurée | Preferences > IOS on Unix |
+| **Images IOU** | Importées | Browse all devices |
+| **Interfaces VM** | Configurées | Host-only + NAT |
+
+### Utilisation des commutateurs IOU
+
+#### Ajout d'un commutateur IOU dans la topologie
+
+1. **Glisser-déposer** un commutateur IOU depuis la liste des équipements
+2. **Configurer les interfaces** selon les besoins
+3. **Connecter aux autres équipements** (routeurs, hôtes)
+4. **Démarrer la simulation** pour tester la connectivité
+
+#### Commandes de base pour les commutateurs IOU
+
+```bash
+# Accès au commutateur
+Switch> enable
+Switch# configure terminal
+
+# Configuration des VLANs
+Switch(config)# vlan 10
+Switch(config-vlan)# name Sales
+Switch(config-vlan)# exit
+
+# Configuration des ports
+Switch(config)# interface fastEthernet 0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 10
+Switch(config-if)# no shutdown
+```
+
+### Résolution des problèmes courants
+
+#### Problème : VM non détectée
+- **Solution** : Vérifier que la VM est démarrée et que les interfaces réseau sont correctement configurées
+- **Commande** : Redémarrer GNS3 et cliquer sur "Refresh"
+
+#### Problème : Images IOU non disponibles
+- **Solution** : Vérifier que la licence IOU est correctement configurée
+- **Vérification** : Aller dans Preferences > IOS on Unix
+
+#### Problème : Connexion instable
+- **Solution** : Vérifier la configuration des interfaces réseau de la VM
+- **Recommandation** : Utiliser Host-only pour la stabilité
 
 ### Commandes de référence
 
