@@ -48,7 +48,9 @@ Dans GNS3, une topologie de base a été mise en place comprenant :
 - **Hôtes simulés (VPCS)** : pour simuler les postes clients
 - **Switches** : pour la commutation locale
 
-#### Vérification de l'état des interfaces
+#### Analyse de l'état des connexions du routeur
+
+Pour vérifier l'état des connexions du routeur et assurer leur stabilité et performance :
 
 ```bash
 R1# show ip interface brief
@@ -58,11 +60,57 @@ FastEthernet3/0 unassigned YES unset administratively down down
 FastEthernet3/1 unassigned YES unset administratively down down
 ```
 
+**Analyse** : Toutes les interfaces sont en mode 'désactivé' dans la colonne 'Statut' en termes d'administration.
+
+#### Validation de la configuration initiale
+
+```bash
+R1# show running-config
+```
+
+Cette commande affiche une liste détaillée de tous les paramètres de configuration actuellement actifs, incluant :
+- Les interfaces réseau
+- Les protocoles de routage
+- Les règles de pare-feu
+- Les paramètres de sécurité
+
+#### Configuration globale
+
+La configuration globale concerne les réglages qui impactent l'ensemble du dispositif :
+
+```bash
+R1# configure terminal
+# ou en abrégé
+R1# conf t
+```
+
+**Éléments clés de la configuration globale :**
+- **Interface de gestion** : Configuration des interfaces de gestion du routeur
+- **Routage** : Configuration des protocoles (OSPF, BGP, RIP, MPLS)
+- **Adresse IP et masque** : Configuration de l'interface de gestion
+- **Sécurité** : Mesures de sécurité et règles de pare-feu
+
 #### Activation d'une interface
 
 ```bash
 R1(config)# interface FastEthernet0/0
 R1(config-if)# no shutdown
+```
+
+#### Enregistrement de la configuration
+
+```bash
+# Méthode 1
+R1# copy running-config startup-config
+
+# Méthode 2 (alternative)
+R1# write
+```
+
+#### Validation des paramètres stockés en RAM
+
+```bash
+R1# show running-config
 ```
 
 ### 2. Tests de connectivité
@@ -74,7 +122,7 @@ Une fois les interfaces configurées, la connectivité est testée avec les comm
 | `ping <adresse_IP>` | Test de connectivité directe | Vérifier la communication entre deux hôtes |
 | `traceroute <adresse_IP>` | Analyse du chemin de routage | Identifier les routeurs intermédiaires |
 
-## Partie 2 : Application de la passerelle
+## Partie 2 : Application de la passerelle et accès Internet
 
 ### 1. Configuration
 
@@ -94,13 +142,46 @@ R1# copy running-config startup-config
 R1# write
 ```
 
-### 2. Validation
+### 2. Accès à Internet depuis GNS3
+
+#### Le NAT (Network Address Translation)
+
+La traduction d'adresses réseau (NAT) modifie les adresses IP et les ports source et destination. Son but est de :
+- Réduire l'utilisation des adresses IP publiques IPv4
+- Masquer les plages d'adresses des réseaux privés
+- Permettre l'accès Internet aux appareils du LAN
+
+**Fonctionnement du NAT :**
+- Traduit les adresses IP privées en une unique adresse IP publique
+- Permet aux appareils du LAN d'utiliser une même adresse IP publique
+- Généralement effectué par des routeurs ou pare-feu
+
+#### Topologie NAT et routeur
+
+**Composants clés :**
+- **NAT** : Traduit les adresses IP privées en adresse IP publique
+- **Routeur** : Dispositif central reliant le LAN à Internet
+- **Passerelle** : Gère le transfert des données entre réseaux
+
+#### Tests de connectivité Internet
+
+```bash
+# Test de ping vers des serveurs publics
+VPCS> ping google.com
+VPCS> ping facebook.com
+
+# Test de résolution DNS
+VPCS> ping 8.8.8.8
+```
+
+### 3. Validation
 
 Les tests suivants permettent de valider la configuration :
 
 | **Test** | **Commande** | **Objectif** | **Résultat attendu** |
 |:---:|:---:|:---:|:---:|
 | **Ping passerelle** | `ping 192.168.1.1` | Vérifier la connectivité avec la passerelle | Réponse ICMP réussie |
+| **Ping Internet** | `ping google.com` | Tester l'accès Internet via NAT | Réponse depuis serveur public |
 | **Traceroute** | `traceroute <destination>` | Analyser le chemin de routage | Liste des routeurs intermédiaires |
 
 ## Partie 3 : Configuration VLAN
@@ -183,6 +264,27 @@ Ce TP a permis d'acquérir les compétences suivantes :
 - **Architecture opérationnelle** : Topologie complète et fonctionnelle  
 
 **Bilan :** Toutes les configurations et tests ont validé la bonne connectivité entre les équipements, démontrant une maîtrise des concepts de base du réseautage avec GNS3.
+
+---
+
+## Ressources et Liens utiles
+
+### Installation et Configuration GNS3
+
+| **Plateforme** | **Lien** | **Description** |
+|:---:|:---:|:---:|
+| **VMware + GNS3** | [Installation étape par étape](https://www.it-connect.fr/introduction-a-gns3-installation-etape-par-etape-pour-bien-debuter/) | Guide complet d'installation |
+| **VMware Player + GNS3** | [OpenClassrooms](https://openclassrooms.com/fr/courses/2581701-simulez-des-architectures-reseaux-avec-gns3/4823166-choisissez-et-installez-une-machine-virtuelle) | Cours OpenClassrooms |
+| **Kali Linux** | [Installation GNS3](https://www.sysnettechsolutions.com/en/install-gns3-kali-linux/) | Installation sur Kali Linux |
+| **VMware sur Kali** | [Installation VMware](https://www.sysnettechsolutions.com/en/install-vmware-kali-linux/) | VMware sur Kali Linux |
+
+### Images et Équipements
+
+| **Type d'équipement** | **Lien** | **Description** |
+|:---:|:---:|:---:|
+| **Images IOS Routeurs** | [Téléchargement gratuit](https://networkrare.com/free-download-cisco-ios-images-for-gns3-and-eve-ng/) | Images Cisco IOS pour GNS3 |
+| **Commutateurs L2/L3** | [Images IOU/IOL](https://networkrare.com/download-cisco-iou-iol-images-gns3-gns3-iou-vm-oracle-virtual-box-l2-l3-cisco-switch-images/) | Images de commutateurs Cisco |
+| **Commutateur L3** | [Configuration L3](https://yaser-rahmati.gitbook.io/gns3/l3-switching-simulation) | Ajout d'un commutateur de couche 3 |
 
 ---
 
