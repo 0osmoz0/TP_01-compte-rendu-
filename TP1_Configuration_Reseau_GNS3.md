@@ -351,11 +351,11 @@ Switch(config-line)# login
 
 ```bash
 # Création du VLAN 100 (Étudiants)
-Switch(config)# vlan 100
+Switch(config)# vlan 200
 Switch(config-vlan)# name etudiant
 
 # Création du VLAN 200 (Intervenants)
-Switch(config)# vlan 200
+Switch(config)# vlan 100
 Switch(config-vlan)# name intervenant
 ```
 
