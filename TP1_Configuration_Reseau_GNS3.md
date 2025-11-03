@@ -21,10 +21,9 @@
 
 | **Photo** | **Nom** | **Prénom** | **GitHub** | **LinkedIn** |
 |:---:|:---:|:---:|:---:|:---:|
-| <img src="https://media.licdn.com/dms/image/v2/D4E35AQFSZbzOmWppmQ/profile-framedphoto-shrink_800_800/B4EZlO8KvFKoAg-/0/1757966019805?e=1759474800&v=beta&t=HJd1WHzfmilQ-Thc-PqNWM3TnV30VxeVV0fsgQXXTE8" width="64" height="64" style="border-radius: 50%;"> | **FARIA** | Anthony | [GitHub](https://github.com/Anthony-Faria-dos-santos) | [LinkedIn](https://www.linkedin.com/in/anthony-faria-dos-santos/) |
-| <img src="https://media.licdn.com/dms/image/v2/D4E35AQGAK7VJ8f5Y8Q/profile-framedphoto-shrink_400_400/B4EZkQ2TS1IwAk-/0/1756924294971?e=1759474800&v=beta&t=gOECMgZQSIjiqey5CndRGDSvl8-sU3v1P25ZIAuuNNw" width="64" height="64" style="border-radius: 50%;"> | **ARBARETAZ** | Quentin | [GitHub](https://github.com/CoDy-2224) | [LinkedIn](https://www.linkedin.com/in/quentin-arbaretaz-technicien-reseaux/) |
-| <img src="https://media.licdn.com/dms/image/v2/D4E03AQGHdkAhxCNjVw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1706858030136?e=1761782400&v=beta&t=JDE_bm8KRclKrAvf7pLllFoW47hSByShXb0uV4hLN-8" width="64" height="64" style="border-radius: 50%;"> | **BOUGARA** | Yani | [GitHub](https://github.com/yanibougara) | [LinkedIn](https://www.linkedin.com/in/yani-bougara-15850224b/) |
-| <img src="https://media.licdn.com/dms/image/v2/D4E03AQEvYhK-R9hC2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1728762194206?e=1761782400&v=beta&t=_azOfyI8BZ6upUWR77NsWiClawd_98qToU3AQwkFY0M" width="64" height="64" style="border-radius: 50%;"> | **LEBEL** | Mathis | [GitHub](https://github.com/0osmoz0) | [LinkedIn](https://www.linkedin.com/in/mathis-lebel-429114293/) |
+| <img src="https://media.licdn.com/dms/image/v2/D4E35AQFSZbzOmWppmQ/profile-framedphoto-shrink_800_800/B4EZlO8KvFKoAg-/0/1757966019805?e=1762779600&v=beta&t=8FS1uTa39mLwLYkfbVJHbcqtv8tvlVdQXgFkt36wzJ0" width="64" height="64" style="border-radius: 50%;"> | **FARIA** | Anthony | [GitHub](https://github.com/Anthony-Faria-dos-santos) | [LinkedIn](https://www.linkedin.com/in/anthony-faria-dos-santos/) | |
+| <img src="https://media.licdn.com/dms/image/v2/D4E03AQGHdkAhxCNjVw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1706858030136?e=1763596800&v=beta&t=pTEPh-7oxxlXHR73UxgkLTUTFp4Fi5Zma8mExZ7-xIY" width="64" height="64" style="border-radius: 50%;"> | **BOUGARA** | Yani | [GitHub](https://github.com/yanibougara) | [LinkedIn](https://www.linkedin.com/in/yani-bougara-15850224b/) |
+| <img src="https://media.licdn.com/dms/image/v2/D4E03AQEvYhK-R9hC2A/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1728762194206?e=1763596800&v=beta&t=dsrW9BQBnlMW1y5Y2rvKmuX9xGQCOoE7O5YMQxI9M7k" width="64" height="64" style="border-radius: 50%;"> | **LEBEL** | Mathis | [GitHub](https://github.com/0osmoz0) | [LinkedIn](https://www.linkedin.com/in/mathis-lebel-429114293/) |
 
 ---
 
@@ -62,6 +61,7 @@
 - [Tâche 3 : Création et configuration des VLANs](#tâche-3--création-et-configuration-des-vlans)
 - [Tâche 4 : Vérification](#tâche-4--vérification)
 - [Tâche 5 : Attribution des ports](#tâche-5--attribution-des-ports)
+- [Tâche 6 : Configuration du trunk et routage inter-VLAN](#tâche-6--configuration-du-trunk-et-routage-inter-vlan)
 </details>
 
 <details>
@@ -77,15 +77,6 @@
 
 - [Installation et Configuration GNS3](#installation-et-configuration-gns3)
 - [Images et Équipements](#images-et-équipements)
-</details>
-
-<details>
-<summary><strong>Glossaire</strong></summary>
-
-- [Équipements et Logiciels](#équipements-et-logiciels)
-- [Technologies et Protocoles](#technologies-et-protocoles)
-- [Configuration et Interfaces](#configuration-et-interfaces)
-- [Commandes et Tests](#commandes-et-tests)
 </details>
 
 </div>
@@ -389,6 +380,157 @@ Switch(config)# interface fastEthernet 0/1
 Switch(config-if)# switchport mode access
 Switch(config-if)# switchport access vlan 100
 ```
+
+### Tâche 6 : Configuration du trunk et routage inter-VLAN
+
+#### Principe du trunk
+
+Un trunk est un lien qui transporte plusieurs VLANs entre un switch et un routeur (ou un autre switch). C'est ce lien qui permet au routeur IOU1 de recevoir les trames VLAN 100 et VLAN 200 pour effectuer le routage inter-VLAN.
+
+<div align="center">
+
+**Fonctionnement du trunk pour le routage inter-VLAN**
+
+</div>
+
+#### Étape 1 : Relier IOU1 au switch dans GNS3
+
+Dans le schéma GNS3, connecter IOU1 au Switch1 avec un câble :
+
+1. **Cliquer sur l'icône du câble** dans la barre d'outils
+2. **Sélectionner les interfaces** à connecter
+3. **Exemple de connexion** : Switch1 `e0/2` vers IOU1 `e0/0`
+
+#### Étape 2 : Configurer le port du switch en trunk
+
+Sur le switch, configurer le port en mode trunk pour transporter les VLANs :
+
+```bash
+Switch> enable
+Switch# configure terminal
+Switch(config)# interface e0/2
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 100,200
+Switch(config-if)# exit
+Switch(config)# exit
+Switch# write
+```
+
+<div align="center">
+
+**Explications des commandes**
+
+</div>
+
+| **Commande** | **Description** |
+|:---:|:---:|
+| `switchport mode trunk` | Active le mode trunk sur le port |
+| `switchport trunk allowed vlan 100,200` | Autorise uniquement les VLAN 100 et 200 sur ce lien |
+
+#### Étape 3 : Configurer les sous-interfaces sur IOU1 (le routeur)
+
+Sur le routeur IOU1, créer une sous-interface pour chaque VLAN afin d'effectuer le routage inter-VLAN :
+
+```bash
+IOU1> enable
+IOU1# configure terminal
+
+IOU1(config)# interface e0/0.100
+IOU1(config-subif)# encapsulation dot1Q 100
+IOU1(config-subif)# ip address 172.16.100.1 255.255.255.0
+IOU1(config-subif)# exit
+
+IOU1(config)# interface e0/0.200
+IOU1(config-subif)# encapsulation dot1Q 200
+IOU1(config-subif)# ip address 172.16.200.1 255.255.255.0
+IOU1(config-subif)# exit
+
+IOU1(config)# exit
+IOU1# write
+```
+
+<div align="center">
+
+**Explications des configurations**
+
+</div>
+
+| **Élément** | **Description** |
+|:---:|:---:|
+| `e0/0.100` | Sous-interface virtuelle liée au VLAN 100 |
+| `encapsulation dot1Q 100` | Cette interface traite les trames VLAN 100 |
+| `ip address 172.16.100.1` | Adresse IP de la passerelle pour le VLAN 100 |
+| `e0/0.200` | Sous-interface virtuelle liée au VLAN 200 |
+| `encapsulation dot1Q 200` | Cette interface traite les trames VLAN 200 |
+| `ip address 172.16.200.1` | Adresse IP de la passerelle pour le VLAN 200 |
+
+**Architecture des sous-interfaces :**
+
+- **VLAN 100** : Passerelle `172.16.100.1` (pour PC1)
+- **VLAN 200** : Passerelle `172.16.200.1` (pour PC2)
+
+#### Étape 4 : Configuration des PC et vérification de la connectivité
+
+**Configuration des PC virtuels :**
+
+<div align="center">
+
+| **PC** | **Adresse IP** | **Masque** | **Passerelle** | **VLAN** |
+|:---:|:---:|:---:|:---:|:---:|
+| **PC1** | 172.16.100.10 | 255.255.255.0 | 172.16.100.1 | VLAN 100 |
+| **PC2** | 172.16.200.10 | 255.255.255.0 | 172.16.200.1 | VLAN 200 |
+
+</div>
+
+**Commandes de configuration sur les VPCS :**
+
+```bash
+# Configuration PC1
+VPCS> ip 172.16.100.10/24 172.16.100.1
+
+# Configuration PC2
+VPCS> ip 172.16.200.10/24 172.16.200.1
+```
+
+**Test de connectivité inter-VLAN :**
+
+Depuis PC1, tester la communication avec PC2 :
+
+```bash
+# Depuis PC1
+VPCS> ping 172.16.200.10
+```
+
+**Résultat attendu :** Si la configuration est correcte, PC1 devrait joindre PC2 via le routeur IOU1, démontrant que le routage inter-VLAN fonctionne correctement.
+
+#### Architecture complète du routage inter-VLAN
+
+<div align="center">
+
+**Schéma de l'architecture**
+
+</div>
+
+```
+PC1 (VLAN 100) → Switch (Port Access VLAN 100)
+                      ↓
+                  Trunk (VLAN 100, 200)
+                      ↓
+                 IOU1 (Sous-interfaces)
+                      ↓
+                  Trunk (VLAN 100, 200)
+                      ↓
+                Switch (Port Access VLAN 200)
+                      ↓
+             PC2 (VLAN 200)
+```
+
+**Flux de communication :**
+1. PC1 (VLAN 100) envoie un paquet vers PC2 (VLAN 200)
+2. Le switch transmet la trame VLAN 100 via le trunk vers IOU1
+3. IOU1 reçoit la trame sur `e0/0.100`, route le paquet vers `e0/0.200`
+4. IOU1 envoie la trame VLAN 200 via le trunk vers le switch
+5. Le switch transmet la trame vers PC2 sur le VLAN 200
 
 ---
 
